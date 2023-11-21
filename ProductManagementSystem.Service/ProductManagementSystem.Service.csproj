@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dal\ProductManagementSystem.Dal.csproj" />
+    <ProjectReference Include="..\ProductManagementSystem.Domain\ProductManagementSystem.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
