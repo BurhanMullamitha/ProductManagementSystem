@@ -1,0 +1,53 @@
+<div class="ui container">
+  <div class="ui icon mini header">
+    Add Product
+  </div>
+
+  <form class="ui form my-form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="field" [ngClass]="{'error': productForm.get('name')?.invalid && productForm.get('name')?.touched}">
+      <label>Name</label>
+      <input type="text" formControlName="name" placeholder="Name">
+      <div class="ui error message" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" [ngClass]="{'visible': productForm.get('name')?.invalid && productForm.get('name')?.touched}">
+        <div *ngIf="productForm.get('name')?.errors?.['required']">Name is required</div>
+        <div *ngIf="productForm.get('name')?.errors?.['maxlength']">Name is too long</div>
+      </div>
+    </div>
+
+    <div class="field" [ngClass]="{'error': productForm.get('description')?.invalid && productForm.get('description')?.touched}">
+      <label>Description</label>
+      <textarea formControlName="description" placeholder="Description"></textarea>
+      <div class="ui error message" *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" [ngClass]="{'visible': productForm.get('description')?.invalid && productForm.get('description')?.touched}">
+        <div *ngIf="productForm.get('description')?.errors?.['required']">Description is required</div>
+        <div *ngIf="productForm.get('description')?.errors?.['maxlength']">Description is too long</div>
+        <div *ngIf="productForm.get('description')?.errors?.['forbiddenName']">Description must contain the product name</div>
+      </div>
+    </div>
+
+    <div class="field" [ngClass]="{'error': productForm.get('price')?.invalid && productForm.get('price')?.touched}">
+      <label>Price</label>
+      <input type="number" formControlName="price" placeholder="Price">
+      <div class="ui error message" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" [ngClass]="{'visible': productForm.get('price')?.invalid && productForm.get('price')?.touched}">
+        <div *ngIf="productForm.get('price')?.errors?.['required']">Price is required</div>
+      </div>
+    </div>
+
+    <div class="field" [ngClass]="{'error': productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched}" [ngClass]="{'visible': productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched}">
+      <label>Select Category</label>
+      <select class="ui dropdown" formControlName="categoryId">
+        <option *ngFor="let category of categories" [value]="category.value">
+          {{category.text}}
+        </option>
+      </select>
+      <div class="ui error message" *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" [ngClass]="{'visible': productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched}">
+        <div *ngIf="productForm.get('categoryId')?.errors?.['required']">Category is required</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Color</label>
+      <input type="text" formControlName="color" placeholder="Color">
+    </div>
+
+    <button class="ui button" type="submit" [disabled]="!productForm.valid">Submit</button>
+  </form>
+</div>

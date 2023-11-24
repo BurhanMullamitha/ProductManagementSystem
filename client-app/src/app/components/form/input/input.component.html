@@ -1,0 +1,9 @@
+<mat-form-field appearance="fill">
+    <mat-label>{{ label }}</mat-label>
+    <input matInput [type]="type" [formControl]="control" [placeholder]="label">
+    <mat-error *ngIf="control.invalid && control.touched">
+      <span *ngFor="let error of errors">
+        <span *ngIf="control.errors?.[error.type]">{{ error.message }}</span>
+      </span>
+    </mat-error>
+  </mat-form-field>
