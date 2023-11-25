@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dal\ProductManagementSystem.Dal.csproj" />
+    <ProjectReference Include="..\ProductManagementSystem.Dal\ProductManagementSystem.Dal.csproj" />
     <ProjectReference Include="..\ProductManagementSystem.Domain\ProductManagementSystem.Domain.csproj" />
     <ProjectReference Include="..\ProductManagementSystem.Service\ProductManagementSystem.Service.csproj" />
   </ItemGroup>

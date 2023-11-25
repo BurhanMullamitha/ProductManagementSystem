@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductManagementSystem.Inf
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductManagementSystem.Service", "ProductManagementSystem.Service\ProductManagementSystem.Service.csproj", "{AAF83F06-66AB-42ED-B754-20ADBD024A38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagementSystem.Dal", "Dal\ProductManagementSystem.Dal.csproj", "{9496BD1A-F61E-4AC6-9443-ED69D06CDFD4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagementSystem.Dal", "ProductManagementSystem.Dal\ProductManagementSystem.Dal.csproj", "{9496BD1A-F61E-4AC6-9443-ED69D06CDFD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

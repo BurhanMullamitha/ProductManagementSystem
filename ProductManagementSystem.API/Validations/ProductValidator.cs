@@ -37,12 +37,12 @@ public class ProductValidator : AbstractValidator<Product>
             .Must(id => ObjectId.TryParse(id, out _))
             .WithMessage("Invalid Id. Please ensure it's a valid BSON Id");
 
-        RuleFor(x => x.CategoryId)
-            .NotEmpty()
-            .NotNull()
-            .WithMessage("Category is required")
-            .Must(id => ObjectId.TryParse(id, out _))
-            .WithMessage("Invalid Id. Please ensure it's a valid BSON Id");
+        //RuleFor(x => x.CategoryId)
+        //    .NotEmpty()
+        //    .NotNull()
+        //    .WithMessage("Category is required")
+        //    .Must(id => ObjectId.TryParse(id, out _))
+        //    .WithMessage("Invalid Id. Please ensure it's a valid BSON Id");
 
     }
 }

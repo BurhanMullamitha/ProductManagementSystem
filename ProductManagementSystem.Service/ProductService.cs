@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using ProductManagementSystem.Dal.Abstractions;
 using ProductManagementSystem.Dal.Core;
+using ProductManagementSystem.Dal.DTOs;
 using ProductManagementSystem.Domain.Entities;
 using ProductManagementSystem.Service.Abstractions;
 
@@ -18,23 +19,32 @@ public class ProductService : IProductService
         _logger = logger;
     }
 
-    public async Task<Result<bool>> CreateProductAsync(Product product)
+    public async Task<Result<ProductDto>> CreateProductAsync(Product product)
     {
         try
         {
-            var category = await _categoryRepo.GetCategoryByIdAsync(product.CategoryId);
+            Category category = await _categoryRepo.GetCategoryByIdAsync(product.CategoryId);
             if (category == null)
             {
-                return Result<bool>.Failure("Category not found");
+                return Result<ProductDto>.Failure("Category not found");
             }
 
             await _productRepo.CreateProductAsync(product);
-            return Result<bool>.Success(true);
-        } 
+
+            var updatedProductInfo = await GetProductByIdAsync(product.Id);
+            if (updatedProductInfo.IsSuccess)
+            {
+                return Result<ProductDto>.Success(updatedProductInfo.Value);
+            }
+            else
+            {
+                return Result<ProductDto>.Failure("Failed to get updated product");
+            }
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to create product");
+            return Result<ProductDto>.Failure("Failed to create product");
         }
     }
 
@@ -45,64 +55,73 @@ public class ProductService : IProductService
             await _productRepo.DeleteProductAsync(id);
             return Result<bool>.Success(true);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
             return Result<bool>.Failure("Failed to delete product");
         }
     }
 
-    public async Task<Result<Product>> GetProductByIdAsync(string id)
+    public async Task<Result<ProductDto>> GetProductByIdAsync(string id)
     {
         try
         {
-            Product product = await _productRepo.GetProductByIdAsync(id);
-            return Result<Product>.Success(product);
+            ProductDto product = await _productRepo.GetProductByIdAsync(id);
+            return Result<ProductDto>.Success(product);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<Product>.Failure("Failed to fetch product");
+            return Result<ProductDto>.Failure("Failed to fetch product");
         }
     }
 
-    public async Task<Result<List<Product>>> GetProductsAsync()
+    public async Task<Result<List<ProductDto>>> GetProductsAsync()
     {
         try
         {
-            List<Product> products = await _productRepo.GetProductsAsync();
-            return Result<List<Product>>.Success(products);
+            List<ProductDto> products = await _productRepo.GetProductsAsync();
+            return Result<List<ProductDto>>.Success(products);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<List<Product>>.Failure("Failed to fetch products");
+            return Result<List<ProductDto>>.Failure("Failed to fetch products");
         }
     }
 
-    public async Task<Result<bool>> UpdateProductAsync(string id, Product updatedProduct)
+    public async Task<Result<ProductDto>> UpdateProductAsync(string id, Product updatedProduct)
     {
         try
         {
             var existingProduct = await _productRepo.GetProductByIdAsync(id);
-            if(existingProduct == null)
+            if (existingProduct == null)
             {
-                return Result<bool>.Failure("Product does not exist");
+                return Result<ProductDto>.Failure("Product does not exist");
             }
 
             var category = await _categoryRepo.GetCategoryByIdAsync(updatedProduct.CategoryId);
             if (category == null)
             {
-                return Result<bool>.Failure("Category not found");
+                return Result<ProductDto>.Failure("Category not found");
             }
 
             await _productRepo.UpdateProductAsync(id, updatedProduct);
-            return Result<bool>.Success(true);
+
+            var updatedProductInfo = await GetProductByIdAsync(id);
+            if (updatedProductInfo.IsSuccess)
+            {
+                return Result<ProductDto>.Success(updatedProductInfo.Value);
+            }
+            else
+            {
+                return Result<ProductDto>.Failure("Failed to get updated product");
+            }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to update product");
+            return Result<ProductDto>.Failure("Failed to update product");
         }
     }
 }

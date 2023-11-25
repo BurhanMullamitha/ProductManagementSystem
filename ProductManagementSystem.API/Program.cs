@@ -23,6 +23,8 @@ app.ConfigureSwagger();
 
 app.UseHttpsRedirection();
 
+app.UseCors("CorsPolicy");
+
 app.UseSerilogRequestLogging();
 
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
