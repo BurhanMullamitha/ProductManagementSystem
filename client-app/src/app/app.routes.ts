@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
-import { ProductsListComponent } from './components/products/products-list/products-list.component';
 import { AddProductComponent } from './components/products/add-product/add-product.component';
 import { UpdateProductComponent } from './components/products/update-product/update-product.component';
 import { UpdateCategoryComponent } from './components/categories/update-category/update-category.component';
 import { AddCategoryComponent } from './components/categories/add-category/add-category.component';
 import { CategoryListComponent } from './components/categories/category-list/category-list.component';
 import { NotFoundComponent } from './components/errors/not-found/not-found.component';
+import { ProductListComponent } from './components/products/product-list/product-list.component';
 
 export const routes: Routes = [
     { 
@@ -15,7 +15,7 @@ export const routes: Routes = [
     },
     {
         path: 'products',
-        component: ProductsListComponent
+        component: ProductListComponent
     },
     {
         path: 'products/add',

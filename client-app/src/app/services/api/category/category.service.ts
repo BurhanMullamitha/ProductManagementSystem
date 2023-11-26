@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../../../models/category';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment.development';
 
@@ -14,13 +14,6 @@ export class CategoryService {
   baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) {
-    this.fetchAllCategories();
-  }
-
-  fetchAllCategories(): void {
-    this.http.get<Category[]>(`${this.baseUrl}/api/Categories`).subscribe(categories => {
-      this.categoriesSubject.next(categories);
-    });
   }
 
   getAllCategories(): Observable<Category[]> {
@@ -33,7 +26,7 @@ export class CategoryService {
         }),
         catchError(error => {
           console.error('There was an error while fetching the categories', error);
-          return of([]);
+          return throwError(() => new Error('There was an error while fetching the categories'));
         })
       );
     }
@@ -52,7 +45,7 @@ export class CategoryService {
         }),
         catchError(error => {
           console.error('There was an error while fetching the category', error);
-          return of({} as Category);
+          return throwError(() => new Error('There was an error while fetching the category'));
         })
       );
     }
@@ -67,7 +60,7 @@ export class CategoryService {
       }),
       catchError(error => {
         console.error('There was an error while adding the category', error);
-        return of({} as Category);
+        return throwError(() => new Error('There was an error while adding the category'));
       })
     );
   }
@@ -82,7 +75,7 @@ export class CategoryService {
       }),
       catchError(error => {
         console.error('There was an error while updating the category', error);
-        return of({} as Category);
+        return throwError(() => new Error('There was an error while updating the category'));
       })
     );
   }
@@ -96,7 +89,7 @@ export class CategoryService {
       }),
       catchError(error => {
         console.error('There was an error while deleting the category', error);
-        return of(null);
+        return throwError(() => new Error('There was an error while deleting the category'));
       })
     );
   }

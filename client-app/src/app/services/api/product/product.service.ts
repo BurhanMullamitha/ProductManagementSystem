@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Product } from '../../../models/product';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment.development';
 
@@ -14,13 +14,6 @@ export class ProductService {
   baseUrl: string = environment.baseUrl;
 
   constructor(private http: HttpClient) {
-    this.fetchAllProducts();
-  }
-
-  fetchAllProducts(): void {
-    this.http.get<Product[]>(`${this.baseUrl}/api/products`).subscribe(products => {
-      this.productsSubject.next(products);
-    });
   }
 
   getAllProducts(): Observable<Product[]> {
@@ -33,7 +26,7 @@ export class ProductService {
         }),
         catchError(error => {
           console.error('There was an error while fetching the products', error);
-          return of([]);
+          return throwError(() => new Error('There was an error while fetching the products'));
         })
       );
     }
@@ -52,7 +45,7 @@ export class ProductService {
         }),
         catchError(error => {
           console.error('There was an error while fetching the product', error);
-          return of({} as Product);
+          return throwError(() => new Error('There was an error while fetching the product'));
         })
       );
     }
@@ -67,7 +60,7 @@ export class ProductService {
       }),
       catchError(error => {
         console.error('There was an error while adding the product', error);
-        return of({} as Product);
+        return throwError(() => new Error('There was an error while adding the product'));
       })
     );
   }
@@ -82,7 +75,7 @@ export class ProductService {
       }),
       catchError(error => {
         console.error('There was an error while updating the product', error);
-        return of({} as Product);
+        return throwError(() => new Error('There was an error while updating the product'));
       })
     );
   }
@@ -96,7 +89,7 @@ export class ProductService {
       }),
       catchError(error => {
         console.error('There was an error while deleting the product', error);
-        return of(null);
+        return throwError(() => new Error('There was an error while deleting the product'));
       })
     );
   }

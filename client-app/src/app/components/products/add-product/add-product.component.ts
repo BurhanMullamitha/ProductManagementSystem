@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-add-product',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-product.component.html',
-  styleUrl: './add-product.component.css'
+  templateUrl: './add-product.component.html'
 })
 
 export class AddProductComponent implements OnInit {

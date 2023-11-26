@@ -9,8 +9,7 @@ import { FormService } from '../../../services/form/category/form.service';
   selector: 'app-update-category',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './update-category.component.html',
-  styleUrl: './update-category.component.css'
+  templateUrl: './update-category.component.html'
 })
 
 export class UpdateCategoryComponent implements OnInit {

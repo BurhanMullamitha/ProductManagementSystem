@@ -8,19 +8,23 @@ import { RouterLink } from '@angular/router';
   selector: 'app-products-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './products-list.component.html',
-  styleUrl: './products-list.component.css'
+  templateUrl: './product-list.component.html'
 })
 
-export class ProductsListComponent implements OnInit {
+export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.productService.products$.subscribe(products => {
-      this.products = products;
+    this.productService.getAllProducts().subscribe({
+      next: (products: Product[]) => {
+        this.products = products;
+      },
+      error: (error: any) => {
+        console.error('There was an error while fetching the products', error);
+      }
     });
   }
 

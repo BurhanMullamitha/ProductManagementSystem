@@ -10,9 +10,9 @@ import { FormService } from '../../../services/form/product/form.service';
   selector: 'app-update-product',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './update-product.component.html',
-  styleUrl: './update-product.component.css'
+  templateUrl: './update-product.component.html'
 })
+
 export class UpdateProductComponent implements OnInit {
   productForm: FormGroup = this.formService.initProductForm();
   categories: any[] = [];

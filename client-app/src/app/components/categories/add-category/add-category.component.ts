@@ -9,8 +9,7 @@ import { FormService } from '../../../services/form/category/form.service';
   selector: 'app-add-category',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-category.component.html',
-  styleUrl: './add-category.component.css'
+  templateUrl: './add-category.component.html'
 })
 
 export class AddCategoryComponent {

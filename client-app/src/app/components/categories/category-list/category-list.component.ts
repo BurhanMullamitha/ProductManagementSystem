@@ -8,8 +8,7 @@ import { RouterLink } from '@angular/router';
   selector: 'app-category-list',
   standalone: true,
   imports: [CommonModule, RouterLink],
-  templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  templateUrl: './category-list.component.html'
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
@@ -17,8 +16,13 @@ export class CategoryListComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.categoryService.categories$.subscribe(categories => {
-      this.categories = categories;
+    this.categoryService.getAllCategories().subscribe({
+      next: (categories: Category[]) => {
+        this.categories = categories;
+      },
+      error: (error: any) => {
+        console.error('There was an error while fetching the categories', error);
+      }
     });
   }
 
