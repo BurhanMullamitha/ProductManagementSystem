@@ -1,9 +1,8 @@
 <div class="ui container">
-  <div class="ui icon mini header">
-    Update Product
-  </div>
-
   <form class="ui form" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="ui icon mini header">
+      Update Product
+    </div>
     <div class="field" [ngClass]="{'error': productForm.get('name')?.invalid}">
       <label>Name</label>
       <input type="text" formControlName="name" placeholder="Name">

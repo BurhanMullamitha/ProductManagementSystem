@@ -18,6 +18,10 @@ export class ProductListComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.fetchProducts();
+  }
+
+  fetchProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (products: Product[]) => {
         this.products = products;
@@ -32,6 +36,7 @@ export class ProductListComponent implements OnInit {
     this.productService.deleteProduct(id)
     .subscribe({
       next: () => {
+        this.fetchProducts();
       },
       error: (errResponse) => {
         console.log(errResponse);

@@ -16,6 +16,10 @@ export class CategoryListComponent implements OnInit {
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    this.fetchCategories();
+  }
+
+  fetchCategories(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
@@ -30,6 +34,7 @@ export class CategoryListComponent implements OnInit {
     this.categoryService.deleteCategory(id)
       .subscribe({
         next: () => {
+          this.fetchCategories();
         },
         error: (errResponse) => {
           console.log(errResponse);
