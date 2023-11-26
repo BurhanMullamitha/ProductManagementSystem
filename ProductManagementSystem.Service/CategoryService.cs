@@ -4,6 +4,7 @@ using ProductManagementSystem.Dal.Abstractions;
 using ProductManagementSystem.Dal.Core;
 using ProductManagementSystem.Domain.Entities;
 using ProductManagementSystem.Service.Abstractions;
+using System.Net;
 
 namespace ProductManagementSystem.Service;
 
@@ -28,7 +29,7 @@ public class CategoryService : ICategoryService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to add category");
+            return Result<bool>.Failure("Failed to add category", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -42,7 +43,7 @@ public class CategoryService : ICategoryService
         catch(Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to delete category");
+            return Result<bool>.Failure("Failed to delete category", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -56,7 +57,7 @@ public class CategoryService : ICategoryService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<Category>.Failure("Failed to fetch category");
+            return Result<Category>.Failure("Failed to fetch category", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -70,7 +71,7 @@ public class CategoryService : ICategoryService
         catch(Exception ex) 
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<List<Category>>.Failure("Failed to fetch categories");
+            return Result<List<Category>>.Failure("Failed to fetch categories", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -81,7 +82,7 @@ public class CategoryService : ICategoryService
             var category = await _categoryRepo.GetCategoryByIdAsync(id);
             if (category == null)
             {
-                return Result<bool>.Failure("Category not found");
+                return Result<bool>.Failure("Category not found", (int)HttpStatusCode.BadRequest);
             }
 
             await _categoryRepo.UpdateCategoryAsync(id, updatedCategory);
@@ -90,7 +91,7 @@ public class CategoryService : ICategoryService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to update category");
+            return Result<bool>.Failure("Failed to update category", (int)HttpStatusCode.InternalServerError);
         }
     }
 }

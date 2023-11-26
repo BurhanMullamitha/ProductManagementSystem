@@ -4,6 +4,7 @@ using ProductManagementSystem.Dal.Core;
 using ProductManagementSystem.Dal.DTOs;
 using ProductManagementSystem.Domain.Entities;
 using ProductManagementSystem.Service.Abstractions;
+using System.Net;
 
 namespace ProductManagementSystem.Service;
 
@@ -26,7 +27,7 @@ public class ProductService : IProductService
             Category category = await _categoryRepo.GetCategoryByIdAsync(product.CategoryId);
             if (category == null)
             {
-                return Result<ProductDto>.Failure("Category not found");
+                return Result<ProductDto>.Failure("Category not found", (int)HttpStatusCode.BadRequest);
             }
 
             await _productRepo.CreateProductAsync(product);
@@ -38,13 +39,13 @@ public class ProductService : IProductService
             }
             else
             {
-                return Result<ProductDto>.Failure("Failed to get updated product");
+                return Result<ProductDto>.Failure("Failed to get created product", (int)HttpStatusCode.InternalServerError);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<ProductDto>.Failure("Failed to create product");
+            return Result<ProductDto>.Failure("Failed to create product", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -58,7 +59,7 @@ public class ProductService : IProductService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<bool>.Failure("Failed to delete product");
+            return Result<bool>.Failure("Failed to delete product", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -72,7 +73,7 @@ public class ProductService : IProductService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<ProductDto>.Failure("Failed to fetch product");
+            return Result<ProductDto>.Failure("Failed to fetch product", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -86,7 +87,7 @@ public class ProductService : IProductService
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<List<ProductDto>>.Failure("Failed to fetch products");
+            return Result<List<ProductDto>>.Failure("Failed to fetch products", (int)HttpStatusCode.InternalServerError);
         }
     }
 
@@ -97,13 +98,13 @@ public class ProductService : IProductService
             var existingProduct = await _productRepo.GetProductByIdAsync(id);
             if (existingProduct == null)
             {
-                return Result<ProductDto>.Failure("Product does not exist");
+                return Result<ProductDto>.Failure("Product does not exist", (int)HttpStatusCode.BadRequest);
             }
 
             var category = await _categoryRepo.GetCategoryByIdAsync(updatedProduct.CategoryId);
             if (category == null)
             {
-                return Result<ProductDto>.Failure("Category not found");
+                return Result<ProductDto>.Failure("Category not found", (int)HttpStatusCode.BadRequest);
             }
 
             await _productRepo.UpdateProductAsync(id, updatedProduct);
@@ -115,13 +116,13 @@ public class ProductService : IProductService
             }
             else
             {
-                return Result<ProductDto>.Failure("Failed to get updated product");
+                return Result<ProductDto>.Failure("Failed to get updated product", (int)HttpStatusCode.InternalServerError);
             }
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occured while performing database operation: @message", ex.Message);
-            return Result<ProductDto>.Failure("Failed to update product");
+            return Result<ProductDto>.Failure("Failed to update product", (int)HttpStatusCode.InternalServerError);
         }
     }
 }

@@ -18,6 +18,13 @@ namespace ProductManagementSystem.API.Utilities.ErrorResponses
             await context.Response.WriteAsync(json);
         }
 
+        public static IActionResult InternalServerError()
+        {
+            ProblemDetails problemDetails = ProblemDetailsFactory.InternalServerError();
+
+            return new ObjectResult(problemDetails);
+        }
+
         public static IActionResult BadRequest(IDictionary<string, string[]> valdiationErrors)
         {
             ProblemDetails problemDetails = ProblemDetailsFactory.BadRequest(valdiationErrors);

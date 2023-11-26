@@ -19,6 +19,20 @@ namespace ProductManagementSystem.API.Utilities.ErrorResponses
             return problem;
         }
 
+        public static ProblemDetails InternalServerError()
+        {
+            var problem = new ProblemDetails()
+            {
+                Status = (int)HttpStatusCode.InternalServerError,
+                Type = "Server error",
+                Title = "Server error",
+                Detail = "Something went wrong while processing your request"
+            };
+            problem.Extensions.Add("trace_id", Guid.NewGuid().ToString());
+
+            return problem;
+        }
+
         public static ProblemDetails BadRequest(IDictionary<string, string[]> validationErrors)
         {
             var problem = new ProblemDetails()
